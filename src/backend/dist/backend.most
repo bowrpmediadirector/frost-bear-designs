@@ -1,0 +1,127 @@
+// Version: 1.0.0
+type ContractStatus__189337915 = {#Completed; #Draft; #Signed};
+type Contract__1056357307 =
+  {
+    caller : Principal;
+    clientDiscord : Text;
+    clientName : Text;
+    createdAt : Int;
+    id : Nat;
+    serviceDetails : Text;
+    serviceType : Text;
+    signatureText : Text;
+    status : ContractStatus__189337915;
+    terms : Text;
+    totalPriceRobux : Nat;
+    totalPriceUSD : Float
+  };
+type Data__791452850<K, V> =
+  {var count : Nat__490723111; kvs : [var ?(K, V)]};
+type ExternalBlob__671167343 = Blob;
+type FreeRelease__812729823 =
+  {
+    category : Text;
+    createdAt : Int;
+    description : Text;
+    downloadCount : Nat;
+    file : ExternalBlob__671167343;
+    id : Nat;
+    isPublished : Bool;
+    title : Text
+  };
+type GalleryItem__85588320 =
+  {
+    category : Text;
+    createdAt : Int;
+    description : Text;
+    id : Nat;
+    image : ExternalBlob__671167343;
+    isPublished : Bool;
+    title : Text
+  };
+type InquiryStatus__486934595 = {#Cancelled; #Completed; #InReview; #Pending};
+type Inquiry__159127206 =
+  {
+    adminNotes : Text;
+    caller : Principal;
+    clientDiscord : Text;
+    clientName : Text;
+    customDetails : Text;
+    id : Nat;
+    priceRobux : Nat;
+    priceUSD : Float;
+    serviceId : Nat;
+    serviceName : Text;
+    status : InquiryStatus__486934595;
+    submittedAt : Int
+  };
+type Internal__8484328<K, V> =
+  {children : [var ?Node__46230540<K, V>]; data : Data__791452850<K, V>};
+type Leaf__809889148<K, V> = {data : Data__791452850<K, V>};
+type Map__158565046<K, V> = Map__297112838<K, V>;
+type Map__297112838<K, V> =
+  {var root : Node__46230540<K, V>; var size : Nat__490723111};
+type Map__605269027<K, V> = Map__158565046<K, V>;
+type Nat__490723111 = Nat__920180692;
+type Nat__920180692 = Nat;
+type Node__46230540<K, V> =
+  {#internal : Internal__8484328<K, V>; #leaf : Leaf__809889148<K, V>};
+type ServiceCategory__640576661 =
+  {#BotDevelopment; #CommunitySetup; #ELS; #Graphics; #Livery};
+type Service__980514341 =
+  {
+    category : ServiceCategory__640576661;
+    description : Text;
+    id : Nat;
+    inclusions : [Text];
+    isAvailable : Bool;
+    name : Text;
+    priceRobux : Nat;
+    priceUSD : Float
+  };
+type UserRole__1073662873 = {#admin; #guest; #user};
+actor {
+  stable var _nextContractId : Nat;
+  stable var _nextGalleryId : Nat;
+  stable var _nextInquiryId : Nat;
+  stable var _nextReleaseId : Nat;
+  stable accessControlState :
+    {
+      var adminAssigned : Bool;
+      userRoles : Map__605269027<Principal, UserRole__1073662873>
+    };
+  stable contracts :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?Contract__1056357307]];
+      var elementIndex : Nat__490723111
+    };
+  stable freeReleases :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?FreeRelease__812729823]];
+      var elementIndex : Nat__490723111
+    };
+  stable galleryItems :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?GalleryItem__85588320]];
+      var elementIndex : Nat__490723111
+    };
+  stable inquiries :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?Inquiry__159127206]];
+      var elementIndex : Nat__490723111
+    };
+  stable var nextContractId : Nat;
+  stable var nextGalleryId : Nat;
+  stable var nextInquiryId : Nat;
+  stable var nextReleaseId : Nat;
+  stable services :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?Service__980514341]];
+      var elementIndex : Nat__490723111
+    }
+};

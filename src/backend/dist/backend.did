@@ -1,0 +1,142 @@
+type _ImmutableObjectStorageRefillResult = 
+ record {
+   success: opt bool;
+   topped_up_amount: opt nat;
+ };
+type _ImmutableObjectStorageRefillInformation = record {
+                                                  proposed_top_up_amount:
+                                                   opt nat;};
+type _ImmutableObjectStorageCreateCertificateResult = 
+ record {
+   blob_hash: text;
+   method: text;
+ };
+type UserRole = 
+ variant {
+   admin;
+   guest;
+   user;
+ };
+type ServiceCategory = 
+ variant {
+   BotDevelopment;
+   CommunitySetup;
+   ELS;
+   Graphics;
+   Livery;
+ };
+type Service = 
+ record {
+   category: ServiceCategory;
+   description: text;
+   id: nat;
+   inclusions: vec text;
+   isAvailable: bool;
+   name: text;
+   priceRobux: nat;
+   priceUSD: float64;
+ };
+type InquiryStatus = 
+ variant {
+   Cancelled;
+   Completed;
+   InReview;
+   Pending;
+ };
+type Inquiry = 
+ record {
+   adminNotes: text;
+   caller: principal;
+   clientDiscord: text;
+   clientName: text;
+   customDetails: text;
+   id: nat;
+   priceRobux: nat;
+   priceUSD: float64;
+   serviceId: nat;
+   serviceName: text;
+   status: InquiryStatus;
+   submittedAt: int;
+ };
+type GalleryItem = 
+ record {
+   category: text;
+   createdAt: int;
+   description: text;
+   id: nat;
+   image: ExternalBlob;
+   isPublished: bool;
+   title: text;
+ };
+type FreeRelease = 
+ record {
+   category: text;
+   createdAt: int;
+   description: text;
+   downloadCount: nat;
+   file: ExternalBlob;
+   id: nat;
+   isPublished: bool;
+   title: text;
+ };
+type ExternalBlob = blob;
+type ContractStatus = 
+ variant {
+   Completed;
+   Draft;
+   Signed;
+ };
+type Contract = 
+ record {
+   caller: principal;
+   clientDiscord: text;
+   clientName: text;
+   createdAt: int;
+   id: nat;
+   serviceDetails: text;
+   serviceType: text;
+   signatureText: text;
+   status: ContractStatus;
+   terms: text;
+   totalPriceRobux: nat;
+   totalPriceUSD: float64;
+ };
+service : {
+  _immutableObjectStorageBlobsAreLive: (hashes: vec blob) -> (vec bool) query;
+  _immutableObjectStorageBlobsToDelete: () -> (vec blob) query;
+  _immutableObjectStorageConfirmBlobDeletion: (blobs: vec blob) -> ();
+  _immutableObjectStorageCreateCertificate: (blobHash: text) ->
+   (_ImmutableObjectStorageCreateCertificateResult);
+  _immutableObjectStorageRefillCashier: (refillInformation:
+   opt _ImmutableObjectStorageRefillInformation) ->
+   (_ImmutableObjectStorageRefillResult);
+  _immutableObjectStorageUpdateGatewayPrincipals: () -> ();
+  _initializeAccessControl: () -> ();
+  addFreeRelease: (title: text, description: text, category: text, file:
+   ExternalBlob, isPublished: bool) -> (FreeRelease);
+  addGalleryItem: (title: text, description: text, category: text, image:
+   ExternalBlob, isPublished: bool) -> (GalleryItem);
+  assignCallerUserRole: (user: principal, role: UserRole) -> ();
+  createContract: (clientName: text, clientDiscord: text, serviceType: 
+   text, serviceDetails: text, totalPriceUSD: float64, totalPriceRobux: 
+   nat, terms: text) -> (Contract);
+  deleteFreeRelease: (id: nat) -> (bool);
+  deleteGalleryItem: (id: nat) -> (bool);
+  getAllContracts: () -> (vec Contract) query;
+  getCallerUserRole: () -> (UserRole) query;
+  getFreeReleases: () -> (vec FreeRelease) query;
+  getGalleryItems: () -> (vec GalleryItem) query;
+  getInquiries: () -> (vec Inquiry) query;
+  getMyContracts: () -> (vec Contract) query;
+  getMyInquiries: () -> (vec Inquiry) query;
+  getServices: () -> (vec Service) query;
+  getServicesByCategory: (category: ServiceCategory) -> (vec Service) query;
+  incrementDownloadCount: (id: nat) -> (bool);
+  isCallerAdmin: () -> (bool) query;
+  signContract: (id: nat, signatureText: text) -> (bool);
+  submitInquiry: (clientName: text, clientDiscord: text, serviceId: nat,
+   serviceName: text, customDetails: text, priceUSD: float64, priceRobux:
+   nat) -> (Inquiry);
+  updateInquiryStatus: (id: nat, status: InquiryStatus, notes: text) ->
+   (bool);
+}

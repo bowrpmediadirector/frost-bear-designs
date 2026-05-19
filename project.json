@@ -1,0 +1,27 @@
+{
+  "overview": "Professional website and webstore for Frost & Bear Designs — a custom design studio offering ELS lighting patterns, liveries, graphics, Discord bots, and community setup services. Includes service catalog with inquiry system, admin dashboard, contract creator with cursive signature tool, media gallery, free releases section, and legal pages.",
+  "features": [
+    "Service catalog with pricing in USD and Robux",
+    "Service inquiry and order submission system",
+    "Admin dashboard to review and manage inquiries",
+    "Contract creator with dropdown fields and cursive signature",
+    "Media gallery for showcasing past work",
+    "Free releases download section",
+    "Terms of Use, Privacy Policy, and Contract Sample pages",
+    "Discord and social media links",
+    "Protected admin login via Internet Identity"
+  ],
+  "category": "business-e-commerce",
+  "tags": [
+    "design-studio",
+    "webstore",
+    "services",
+    "els",
+    "liveries",
+    "discord-bots",
+    "contract-creator",
+    "gallery",
+    "admin-panel"
+  ],
+  "last_updated": "2026-05-02T10:49:07.790Z"
+}
